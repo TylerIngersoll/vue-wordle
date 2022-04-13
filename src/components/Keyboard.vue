@@ -145,7 +145,8 @@ onBeforeUnmount(() => {
   border-radius: 0.6rem;
   background-color: #222;
   color: white;
-  transition: box-shadow 0.025s ease-in-out, background-color 0.4s 1.6s ease-in;
+  transition: box-shadow 0.025s ease-in-out, background-color 0.4s 1.6s ease-in,
+    color 0.4s 1.6s ease-in-out;
   cursor: pointer;
 
   @media screen and (min-width: $md) {
@@ -165,6 +166,7 @@ onBeforeUnmount(() => {
 
   &.miss {
     background-color: black;
+    color: $gray5;
   }
 
   &.present {
