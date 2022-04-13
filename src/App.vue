@@ -156,9 +156,9 @@ header {
   border-bottom: 1px solid $gray0;
 }
 
-footer {
+footer.container {
+  margin-top: 4rem;
   flex-shrink: 0;
-  margin-top: 3rem;
   padding: 1rem 0;
   border-top: 1px solid $gray0;
 }
