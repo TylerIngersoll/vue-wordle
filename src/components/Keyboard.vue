@@ -1,5 +1,5 @@
 <template>
-  <div class="keyboard">
+  <div class="keyboard" ref="keyboardRef">
     <div v-for="(row, index) in keyboard.keys" :key="index" class="row">
       <button
         v-for="(key, keyIndex) in row"
@@ -33,6 +33,7 @@ import {
 } from "vue";
 
 const keyRefs = ref([]);
+const keyboardRef = ref(null);
 const emit = defineEmits(["key-event"]);
 
 const props = defineProps({
@@ -90,15 +91,27 @@ const onRelease = (key) => {
 };
 
 const updateKeyClass = () => {
-  for (const key of props.keyClass) {
-    keyRefs.value[`${key.key}`].classList.add(key.class);
+  if (props.keyClass.length > 0) {
+    for (const key of props.keyClass) {
+      keyRefs.value[`${key.key}`].classList.add(key.class);
+    }
+  } else {
+    const removeClasses = (className) => {
+      keyboardRef.value.querySelectorAll(`.${className}`).forEach((el) => {
+        el.classList.remove(className);
+      });
+    };
+
+    removeClasses("miss");
+    removeClasses("present");
+    removeClasses("match");
   }
 };
 
 watch(
   () => props.keyClass,
   () => {
-    if (props.keyClass.length > 0) updateKeyClass();
+    updateKeyClass();
   }
 );
 
