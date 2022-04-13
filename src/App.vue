@@ -1,24 +1,10 @@
 <template>
-  <div class="upper">
-    <header class="container">
-      <h1 class="first-heading center">Wordle Clone</h1>
-    </header>
-    <main>
-      <WordleClone />
-    </main>
-  </div>
-  <footer class="container">
-    <p>
-      Visit
-      <a
-        href="https://tyleringersoll.com/projects"
-        target="_blank"
-        ref="noopener noreferrer"
-        >tyleringersoll.com/projects</a
-      >
-      for more info about this Vue.js 3 project.
-    </p>
-  </footer>
+  <header class="container">
+    <h1 class="first-heading center">Wordle Clone</h1>
+  </header>
+  <main>
+    <WordleClone />
+  </main>
 </template>
 
 <script setup>
@@ -147,20 +133,12 @@ a {
   height: 100%;
 }
 
-.upper {
-  flex: 1 0 auto;
-}
-
 header {
   padding-bottom: 1rem;
   border-bottom: 1px solid $gray0;
 }
 
-footer.container {
-  margin-top: 4rem;
-  flex-shrink: 0;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-top: 1px solid $gray0;
+main {
+  height: 100%;
 }
 </style>

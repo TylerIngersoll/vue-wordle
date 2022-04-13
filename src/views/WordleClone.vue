@@ -25,29 +25,28 @@
         </div>
       </div>
 
-      <Keyboard :keyClass="data.keyClasses" @key-event="onKeyEvent" />
-
       <transition name="fade" mode="out-in">
         <Modal
           :modalOpen="data.modalOpen"
           maxWidth="34rem"
           @modal-close="onModalClose"
         >
-          <h1 class="modal-heading" v-if="data.success">You win! 🎉</h1>
-          <h1 class="modal-heading" v-else>
-            <span style="margin: 0 auto; display: block"
-              >😲 🤡 😲 🤡 😲 🤡
-            </span>
-            You lose! The word was:
-            <span class="highlight">{{ data.baseWord }}</span>
-          </h1>
+          <h2 class="modal-heading" v-if="data.success">You win! 🎉</h2>
+          <template v-else>
+            <h2 class="modal-heading description">You lose! 🤡</h2>
+            <p class="modal-heading-description">
+              The word was: <span class="highlight">{{ data.baseWord }}</span>
+            </p>
+          </template>
           <Results
             v-if="data.modalOpen"
             :stats="data.stats"
             :attempt="data.row"
+            :success="data.success"
           /> </Modal
       ></transition>
     </div>
+    <Keyboard :keyClass="data.keyClasses" @key-event="onKeyEvent" />
   </div>
 </template>
 
@@ -72,6 +71,7 @@ const data = reactive({
   modalContent: "",
   modalComponent: {},
   success: false,
+  fail: false,
   stats: {},
 });
 
@@ -98,6 +98,7 @@ const splitWord = (string) => {
 const getWord = () => {
   data.baseWord = data.library[Math.floor(Math.random() * data.library.length)];
   data.word = splitWord(data.baseWord);
+  console.log(data.baseWord);
 };
 
 const onReset = () => {
@@ -105,10 +106,10 @@ const onReset = () => {
   data.row = 1;
   data.tiles = [];
   data.guess = "";
-  data.disableSubmit = true;
   data.instance = data.instance + 1;
   data.modalContent = "";
   data.success = false;
+  data.fail = false;
   data.keyClasses = [];
   data.stats = {};
   getWord();
@@ -226,9 +227,7 @@ const onSubmit = () => {
     if (data.word.join("") === data.guess) {
       onSuccess();
     } else if (data.row === 6) {
-      setStats();
-      data.modalOpen = true;
-      data.modalContent = `You lose! The word was ${data.word.join("")}!`;
+      onFail();
     } else {
       data.row = data.row + 1;
       data.guess = "";
@@ -252,14 +251,20 @@ const onSuccess = () => {
   }, 4000);
 };
 
+const onFail = () => {
+  data.fail = true;
+  rowRefs.value[`row${data.row}`].classList.add("failure");
+  setStats();
+
+  setTimeout(() => {
+    data.modalOpen = true;
+  }, 2400);
+};
+
 const onModalClose = () => {
   data.modalOpen = false;
 
-  if (data.success) {
-    // You win
-    onReset();
-  } else if (data.row === 6) {
-    // You lose
+  if (data.success || data.row === 6) {
     onReset();
   } else {
     data.guess = "";
@@ -285,6 +290,7 @@ const getStats = () => {
         guess4: 0,
         guess5: 0,
         guess6: 0,
+        guessX: 0,
       },
     };
   }
@@ -313,6 +319,7 @@ const setStats = () => {
       (data.stats.totalWins / data.stats.gamesPlayed) *
       100
     ).toFixed();
+    data.stats.guessDistribution["guessX"]++;
 
     window.localStorage.setItem("wordleStats", JSON.stringify(data.stats));
   }
@@ -325,18 +332,20 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.wordle {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .game-wrapper {
   max-width: 28rem;
   width: 100%;
-  margin: 2rem auto;
+  margin: 2rem auto 0.5rem;
 
   @media screen and (min-width: $md) {
     margin: 4rem auto 2rem;
   }
-}
-
-::v-deep .keyboard {
-  margin-top: 2rem;
 }
 
 .highlight {
@@ -347,12 +356,20 @@ onMounted(() => {
 
 .modal-heading {
   margin-bottom: 2rem;
+
+  &.description {
+    margin-bottom: 0;
+  }
+
+  &-description {
+    margin-bottom: 2rem;
+  }
 }
 
 .row {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
   margin: 0 6px 6px;
 
   &.oops {
@@ -449,6 +466,13 @@ onMounted(() => {
       animation-delay: 1.9s;
     }
   }
+}
+
+.failure .tile {
+  background-color: #a52a2a;
+  animation-name: shake;
+  animation-duration: 0.125s;
+  animation-iteration-count: 16;
 }
 
 .bad-word {

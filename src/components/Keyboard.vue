@@ -115,11 +115,14 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .keyboard {
-  margin: 2rem 0.25rem 0;
+  margin: auto auto 1rem;
+  padding: 0 0.25rem;
+  max-width: 28rem;
+  width: 100%;
   touch-action: manipulation;
 
   @media screen and (min-width: $md) {
-    margin-top: 3rem;
+    margin: auto auto 2rem;
   }
 }
 
@@ -174,7 +177,7 @@ onBeforeUnmount(() => {
     margin-right: 2px;
   }
 
-  @media screen and (max-width: 374px) {
+  @media screen and (max-width: 359px) {
     font-size: 0.6rem;
     padding: 1rem 0.25rem;
     min-width: 1.55rem;

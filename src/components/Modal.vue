@@ -92,7 +92,7 @@ const props = defineProps({
 
 const icons = {
   close:
-    '<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"xmlns="http://www.w3.org/2000/svg"xmlns:cc="http://creativecommons.org/ns#"xmlns:dc="http://purl.org/dc/elements/1.1/"xmlns:svg="http://www.w3.org/2000/svg"xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"xmlns:ns1="http://sozi.baierouge.fr"xmlns:xlink="http://www.w3.org/1999/xlink"id="svg2"viewBox="0 0 744.09 1052.4"version="1.1"><g id="layer1"><path id="svg-bg" class="svg-bg" d="m814.29 606.65a314.29 314.29 0 1 1 -628.57 0 314.29 314.29 0 1 1 628.57 0z" stroke="#000" stroke-width="5" transform="matrix(1.1048 0 0 1.1048 -179.21 -162.53)"/><g id="g3763" transform="matrix(.91837 0 0 .91837 47.587 10.944)" stroke="#fff" stroke-linecap="round" stroke-width="133.87" fill="none" > <path id="path2991" class="svg-x" d="m176.51 362.87 356.13 356.13" /> <path id="path2993" class="svg-x" d="m532.64 362.87-356.13 356.13" /></g></g></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg" id="svg2" viewBox="0 0 744.09 1052.4" version="1.1"><g id="layer1"><path id="svg-bg" class="svg-bg" d="m814.29 606.65a314.29 314.29 0 1 1 -628.57 0 314.29 314.29 0 1 1 628.57 0z" stroke="#000" stroke-width="5" transform="matrix(1.1048 0 0 1.1048 -179.21 -162.53)" ></path><g id="g3763" transform="matrix(.91837 0 0 .91837 47.587 10.944)" stroke="#fff" stroke-linecap="round" stroke-width="133.87" fill="none" ><path id="path2991" class="svg-x" d="m176.51 362.87 356.13 356.13"></path><path id="path2993" class="svg-x" d="m532.64 362.87-356.13 356.13"></path></g></g></svg>',
 };
 
 const onModalClose = () => {
@@ -161,9 +161,10 @@ body.modal-open {
     position: relative;
     max-width: calc(100% - 2rem);
     width: 100%;
+    margin: auto 2rem;
     padding: 4rem 2rem 2rem;
     background-color: $gray8;
-    border-radius: 1rem;
+    border-radius: 0.6rem;
     border: 0.15rem solid black;
 
     @media screen and (min-width: $md) {
