@@ -79,6 +79,10 @@ const dictionary = computed(() => {
   return data.library.concat(words);
 });
 
+const notInDictionary = computed(() => {
+  return data.guess.length === 5 && !dictionary.value.includes(data.guess);
+});
+
 const getLetter = (row, tile) => {
   let letter = "";
   if (data.tiles[row - 1]) {
@@ -114,20 +118,34 @@ const onReset = () => {
 const onKeyEvent = (key) => {
   if (data.guess.length === 5 && key === "Enter") {
     if (data.success) return;
-    splitGuess();
+    handleKeyEvent();
     onSubmit();
-  } else if (key === "Backspace" && data.guess.length !== 0) {
+  } else if (data.guess.length !== 0 && key === "Backspace") {
     data.guess = data.guess.slice(0, -1);
-    splitGuess();
+    handleKeyEvent();
   } else if (key === "Reset") {
     onReset();
   } else if (data.guess.length === 5) {
     data.guess = data.guess.slice(0, -1);
     data.guess = data.guess + key;
-    splitGuess();
+    handleKeyEvent();
   } else if (key !== "Backspace" && key !== "Enter") {
     data.guess = data.guess + key;
-    splitGuess();
+    handleKeyEvent();
+  }
+};
+
+const handleKeyEvent = () => {
+  splitGuess();
+  checkForBadWord();
+};
+
+const checkForBadWord = () => {
+  const rowEl = rowRefs.value[`row${data.row}`];
+  if (notInDictionary.value) {
+    rowEl.classList.add("bad-word");
+  } else {
+    rowEl.classList.remove("bad-word");
   }
 };
 
@@ -416,6 +434,13 @@ onMounted(() => {
     &-5 {
       animation-delay: 1.9s;
     }
+  }
+}
+
+.bad-word {
+  .tile {
+    background-color: #a52a2a;
+    transition-delay: 0s;
   }
 }
 
