@@ -146,6 +146,11 @@ const checkForBadWord = () => {
     rowEl.classList.add("bad-word");
   } else {
     rowEl.classList.remove("bad-word");
+    if (data.guess.length === 4) {
+      rowEl.classList.add("bad-word-transition");
+    } else {
+      rowEl.classList.remove("bad-word-transition");
+    }
   }
 };
 
@@ -440,6 +445,12 @@ onMounted(() => {
 .bad-word {
   .tile {
     background-color: #a52a2a;
+    transition-delay: 0s;
+  }
+}
+
+.bad-word-transition {
+  .tile {
     transition-delay: 0s;
   }
 }
