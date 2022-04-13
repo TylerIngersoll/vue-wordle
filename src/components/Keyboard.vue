@@ -116,6 +116,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .keyboard {
   margin-top: 2rem;
+  touch-action: manipulation;
 
   @media screen and (min-width: $md) {
     margin-top: 3rem;
