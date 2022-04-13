@@ -20,13 +20,10 @@
       </li>
     </ul>
 
-    <h2>Guess Distribution</h2>
+    <h2>Guess distribution</h2>
     <div
       v-for="(guess, index) in props.stats.guessDistribution"
-      :class="[
-        'guess',
-        { current: props.attempt === Number(index.replace('guess', '')) },
-      ]"
+      :class="['guess', distributionClass(index)]"
       :key="index"
     >
       <span class="attempts" v-html="index.replace('guess', '')" />
@@ -41,7 +38,7 @@
     </div>
 
     <!-- <button type="button" @click="onShare">Share</button> -->
-    <!-- <button type="button" @click="onClearStats">Clear stats</button> -->
+    <button type="button" @click="onClearStats">Clear stats</button>
   </aside>
 </template>
 
@@ -57,7 +54,23 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
+  success: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const distributionClass = (index) => {
+  let className = null;
+
+  if (isNaN(Number(index.replace("guess", "")))) {
+    className = "fails";
+  } else {
+    className =
+      props.attempt === Number(index.replace("guess", "")) ? "current" : null;
+  }
+  return className;
+};
 
 const wordle = reactive({
   largestDist: 0,
@@ -71,9 +84,9 @@ const getWidth = (guess) => {
 //   /** do to */
 // };
 
-// const onClearStats = () => {
-//   window.localStorage.clear();
-// };
+const onClearStats = () => {
+  window.localStorage.clear();
+};
 
 onMounted(() => {
   const obj = props.stats.guessDistribution;
@@ -96,6 +109,7 @@ onMounted(() => {
 
 h2 {
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .stats {
@@ -115,7 +129,7 @@ h2 {
 .stat {
   display: block;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: bold;
   line-height: 1;
 }
@@ -135,13 +149,13 @@ h2 {
 }
 
 .attempts {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: bold;
   padding: 0 0.4rem 0 0;
 }
 
 .bar {
-  height: 1.55rem;
+  height: 1.35rem;
   background-color: gray;
   padding: 0 0.5rem;
   line-height: 1;
@@ -152,6 +166,10 @@ h2 {
 
   .current & {
     background-color: #538d4e;
+  }
+
+  .fails & {
+    background-color: #a52a2a;
   }
 
   &-container {
