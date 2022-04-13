@@ -159,7 +159,8 @@ header {
 footer.container {
   margin-top: 4rem;
   flex-shrink: 0;
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-top: 1px solid $gray0;
 }
 </style>

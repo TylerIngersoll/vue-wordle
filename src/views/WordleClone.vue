@@ -328,7 +328,11 @@ onMounted(() => {
 .game-wrapper {
   max-width: 28rem;
   width: 100%;
-  margin: 4rem auto 2rem;
+  margin: 2rem auto;
+
+  @media screen and (min-width: $md) {
+    margin: 4rem auto 2rem;
+  }
 }
 
 ::v-deep .keyboard {
@@ -361,7 +365,7 @@ onMounted(() => {
   margin: 0 6px 0 0;
   max-width: 72px;
   width: 100%;
-  height: 62px;
+  height: 52px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -375,6 +379,10 @@ onMounted(() => {
   user-select: none;
   border: 0;
   transition: background-color 0.5s ease-out;
+
+  @media screen and (min-width: $md) {
+    height: 62px;
+  }
 
   &.empty {
     border: 2px solid gray;
