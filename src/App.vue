@@ -1,6 +1,6 @@
 <template>
-  <div class="upper container">
-    <header>
+  <div class="upper">
+    <header class="container">
       <h1 class="first-heading center">Wordle Clone</h1>
     </header>
     <main>

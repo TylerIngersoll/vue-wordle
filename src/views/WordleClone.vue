@@ -352,7 +352,8 @@ onMounted(() => {
 .row {
   display: flex;
   justify-content: center;
-  margin: 0 0 6px;
+  gap: 6px;
+  margin: 0 6px 6px;
 
   &.oops {
     animation-name: shake;
@@ -362,7 +363,7 @@ onMounted(() => {
 }
 
 .tile {
-  margin: 0 6px 0 0;
+  margin: 0; // 6px 0 0;
   max-width: 72px;
   width: 100%;
   height: 52px;
