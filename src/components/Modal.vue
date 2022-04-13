@@ -212,6 +212,11 @@ button.close-button {
 
 <style lang="scss">
 .close-button {
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
   .svg-bg {
     stroke: none;
     fill: transparent;
