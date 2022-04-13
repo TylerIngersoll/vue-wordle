@@ -115,7 +115,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .keyboard {
-  margin-top: 2rem;
+  margin: 2rem 0.25rem 0;
   touch-action: manipulation;
 
   @media screen and (min-width: $md) {
@@ -125,8 +125,9 @@ onBeforeUnmount(() => {
 
 .row {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  gap: 2px;
   margin: 2px auto;
 }
 
@@ -134,8 +135,8 @@ onBeforeUnmount(() => {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin: 0 1px 1px;
   padding: 1rem 0.725rem;
+  min-width: 2rem;
   font-family: inherit;
   font-size: 0.8rem;
   line-height: 0;
@@ -148,6 +149,36 @@ onBeforeUnmount(() => {
   transition: box-shadow 0.025s ease-in-out, background-color 0.4s 1.6s ease-in,
     color 0.4s 1.6s ease-in-out;
   cursor: pointer;
+
+  &.a {
+    margin-left: 6%;
+  }
+
+  &.l {
+    margin-right: 6%;
+  }
+
+  &.z {
+    margin-left: 14%;
+  }
+
+  &.m {
+    margin-right: 14%;
+  }
+
+  &.enter {
+    margin-left: 2px;
+  }
+
+  &.backspace {
+    margin-right: 2px;
+  }
+
+  @media screen and (max-width: 374px) {
+    font-size: 0.6rem;
+    padding: 1rem 0.25rem;
+    min-width: 1.55rem;
+  }
 
   @media screen and (min-width: $md) {
     margin: 0 2px 2px;
