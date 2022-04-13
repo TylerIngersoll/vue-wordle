@@ -112,6 +112,7 @@ const onReset = () => {
   data.fail = false;
   data.keyClasses = [];
   data.stats = {};
+
   getWord();
   getStats();
 };
@@ -248,6 +249,7 @@ const onSuccess = () => {
 
   setTimeout(() => {
     data.modalOpen = true;
+    data.keyClasses = [];
   }, 4000);
 };
 
@@ -258,13 +260,14 @@ const onFail = () => {
 
   setTimeout(() => {
     data.modalOpen = true;
+    data.keyClasses = [];
   }, 2400);
 };
 
 const onModalClose = () => {
   data.modalOpen = false;
 
-  if (data.success || data.row === 6) {
+  if (data.success || data.fail) {
     onReset();
   } else {
     data.guess = "";
