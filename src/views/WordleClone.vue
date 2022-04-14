@@ -251,6 +251,8 @@ const buildShareableTileString = () => {
     }
   });
 
+  tileString += "\nhttps://wordle-tyleringersoll.netlify.app/";
+
   data.shareableTiles = tileString;
 };
 
