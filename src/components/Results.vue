@@ -89,8 +89,32 @@ const getWidth = (guess) => {
   return (guess / wordle.largestDist) * 100;
 };
 
+const browserCanShare = () => {
+  return (
+    navigator.canShare &&
+    navigator.canShare(props.shareableTiles) &&
+    navigator.share
+  );
+};
+
 const onShare = () => {
   console.log(props.shareableTiles);
+
+  let shareSuccess = false;
+
+  try {
+    if (browserCanShare()) {
+      navigator.share(props.shareableTiles);
+      shareSuccess = true;
+    }
+  } catch (error) {
+    shareSuccess = false;
+  }
+
+  if (!shareSuccess) {
+    navigator.clipboard.writeText(props.shareableTiles);
+    // alert("Game results copied to clipboard!");
+  }
 };
 
 const onClearStats = () => {
