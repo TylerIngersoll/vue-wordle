@@ -414,7 +414,7 @@ watch(
   align-items: center;
   color: white;
   font-size: 2rem;
-  line-height: 2rem;
+  line-height: 1;
   font-weight: bold;
   vertical-align: middle;
   box-sizing: border-box;
@@ -425,6 +425,11 @@ watch(
 
   @media screen and (min-width: $md) {
     height: 62px;
+  }
+
+  @media screen and (max-height: 700px) {
+    font-size: 1.2rem;
+    height: 42px;
   }
 
   &.empty {
