@@ -1,5 +1,5 @@
 <template>
-  <aside class="wordle-stats">
+  <div class="wordle-stats">
     <h2>Statistics</h2>
     <ul class="stats">
       <li class="col">
@@ -21,29 +21,44 @@
     </ul>
 
     <h2>Guess distribution</h2>
-    <div
-      v-for="(guess, index) in props.stats.guessDistribution"
-      :class="['guess', distributionClass(index)]"
-      :key="index"
-    >
-      <span class="attempts" v-html="index.replace('guess', '')" />
-      <span class="bar-container">
-        <span
-          v-if="guess > 0"
-          class="bar"
-          :style="`width: ${getWidth(guess)}%`"
-          >{{ guess }}</span
+    <div class="guess-share-container">
+      <div class="guess-distribution">
+        <div
+          v-for="(guess, index) in props.stats.guessDistribution"
+          :class="['guess', distributionClass(index)]"
+          :key="index"
         >
-      </span>
-    </div>
+          <span class="attempts" v-html="index.replace('guess', '')" />
+          <span class="bar-container">
+            <span
+              v-if="guess > 0"
+              class="bar"
+              :style="`width: ${getWidth(guess)}%`"
+              >{{ guess }}</span
+            >
+          </span>
+        </div>
+      </div>
 
-    <!-- <button type="button" @click="onShare">Share</button> -->
+      <button
+        class="share-button"
+        type="button"
+        title="Share your attempt"
+        aria-label="Click this button to share your attempt!"
+        @click="onShare"
+        v-html="shareIcon"
+      />
+    </div>
+    <br /><br />
     <button type="button" @click="onClearStats">Clear stats</button>
-  </aside>
+  </div>
 </template>
 
 <script setup>
 import { defineProps, reactive, onMounted } from "vue";
+
+const shareIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M30.3 13.7L25 8.4l-5.3 5.3-1.4-1.4L25 5.6l6.7 6.7z"/><path d="M24 7h2v21h-2z"/><path d="M35 40H15c-1.7 0-3-1.3-3-3V19c0-1.7 1.3-3 3-3h7v2h-7c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V19c0-.6-.4-1-1-1h-7v-2h7c1.7 0 3 1.3 3 3v18c0 1.7-1.3 3-3 3z"/></svg>';
 
 const props = defineProps({
   stats: {
@@ -61,6 +76,9 @@ const props = defineProps({
   statisticsButtonClicked: {
     type: Boolean,
     default: false,
+  },
+  shareableTiles: {
+    type: String,
   },
 });
 
@@ -86,9 +104,31 @@ const getWidth = (guess) => {
   return (guess / wordle.largestDist) * 100;
 };
 
-// const onShare = () => {
-//   /** do to */
-// };
+const browserCanShare = () => {
+  return (
+    navigator.canShare &&
+    navigator.canShare(props.shareableTiles) &&
+    navigator.share
+  );
+};
+
+const onShare = () => {
+  let shareSuccess = false;
+
+  try {
+    if (browserCanShare()) {
+      navigator.share(props.shareableTiles);
+      shareSuccess = true;
+    }
+  } catch (error) {
+    shareSuccess = false;
+  }
+
+  if (!shareSuccess) {
+    navigator.clipboard.writeText(props.shareableTiles);
+    // alert("Game results copied to clipboard!");
+  }
+};
 
 const onClearStats = () => {
   window.localStorage.clear();
@@ -151,7 +191,6 @@ h2 {
   justify-content: space-between;
   align-items: center;
   margin: 0.5rem 0;
-  /* padding: 0 0.25rem 0 0; */
 }
 
 .attempts {
@@ -187,5 +226,62 @@ h2 {
 
 .value {
   padding: 0.5rem 0;
+}
+
+.guess-share-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.guess-distribution {
+  flex: 2;
+  padding-right: 1rem;
+  border-right: 1px solid white;
+
+  @media screen and (min-width: $md) {
+    flex: 3;
+  }
+}
+
+button.share-button {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  height: 100%;
+  padding: 0;
+  width: 4rem;
+  height: 4rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    outline-offset: 0.3rem;
+    outline-color: $highlight5;
+    outline-width: 0.2rem;
+    outline-style: solid;
+    border-radius: 50%;
+  }
+}
+</style>
+
+<style lang="scss">
+.share-button {
+  svg {
+    width: 4rem;
+    height: 4rem;
+    fill: white;
+  }
+
+  &:hover {
+    svg {
+      fill: $highlight1;
+    }
+  }
 }
 </style>

@@ -45,6 +45,7 @@
             :attempt="data.row"
             :success="data.success"
             :statisticsButtonClicked="data.statisticsButtonClicked"
+            :shareableTiles="data.shareableTiles"
           /> </Modal
       ></transition>
     </div>
@@ -71,6 +72,7 @@ const data = reactive({
   baseWord: "",
   word: [],
   guess: "",
+  shareableTiles: "",
   inputValue: "",
   row: 1,
   tiles: [],
@@ -230,6 +232,30 @@ const setClasses = () => {
   }
 };
 
+const buildShareableTileString = () => {
+  let tileString = "Tyler's Wordle Game\n";
+
+  data.keyClasses.forEach((word, index) => {
+    const className = word.class;
+
+    if (className === "match") {
+      tileString += "🟩";
+    } else if (className === "miss") {
+      tileString += "⬛";
+    } else if (className === "present") {
+      tileString += "🟨";
+    }
+
+    if ((index + 1) % 5 === 0) {
+      tileString += "\n";
+    }
+  });
+
+  tileString += "\nhttps://wordle-tyleringersoll.netlify.app/";
+
+  data.shareableTiles = tileString;
+};
+
 const onSubmit = () => {
   if (data.row > 6) return;
 
@@ -256,6 +282,7 @@ const onSubmit = () => {
 const onSuccess = () => {
   data.success = true;
   rowRefs.value[`row${data.row}`].classList.add("success");
+  buildShareableTileString();
   setStats();
 
   setTimeout(() => {
@@ -267,6 +294,7 @@ const onSuccess = () => {
 const onFail = () => {
   data.fail = true;
   rowRefs.value[`row${data.row}`].classList.add("failure");
+  buildShareableTileString();
   setStats();
 
   setTimeout(() => {

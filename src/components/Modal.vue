@@ -162,7 +162,7 @@ body.modal-open {
     max-width: calc(100% - 2rem);
     width: 100%;
     margin: auto 2rem;
-    padding: 4rem 2rem 2rem;
+    padding: 1rem;
     background-color: $gray8;
     border-radius: 0.6rem;
     border: 0.15rem solid black;
