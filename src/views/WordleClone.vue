@@ -32,6 +32,7 @@
           @modal-close="onModalClose"
         >
           <h2 class="modal-heading" v-if="data.success">You win! 🎉</h2>
+          <template v-else-if="data.statisticsButtonClicked"></template>
           <template v-else>
             <h2 class="modal-heading description">You lose! 🤡</h2>
             <p class="modal-heading-description">
@@ -43,6 +44,7 @@
             :stats="data.stats"
             :attempt="data.row"
             :success="data.success"
+            :statisticsButtonClicked="data.statisticsButtonClicked"
           /> </Modal
       ></transition>
     </div>
@@ -51,11 +53,18 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref, onMounted } from "vue";
+import { defineProps, reactive, computed, ref, onMounted, watch } from "vue";
 import { library, words } from "@/data/library";
 
 const rowRefs = ref([]);
 const tileRefs = ref([]);
+
+const props = defineProps({
+  statistics: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const data = reactive({
   library: library,
@@ -73,6 +82,7 @@ const data = reactive({
   success: false,
   fail: false,
   stats: {},
+  statisticsButtonClicked: false,
 });
 
 const dictionary = computed(() => {
@@ -112,6 +122,7 @@ const onReset = () => {
   data.fail = false;
   data.keyClasses = [];
   data.stats = {};
+  data.statisticsButtonClicked = false;
 
   getWord();
   getStats();
@@ -266,6 +277,7 @@ const onFail = () => {
 
 const onModalClose = () => {
   data.modalOpen = false;
+  data.statisticsButtonClicked = false;
 
   if (data.success || data.fail) {
     onReset();
@@ -332,6 +344,16 @@ onMounted(() => {
   getWord();
   getStats();
 });
+
+watch(
+  () => props.statistics,
+  () => {
+    if (data.modalOpen === false) {
+      data.modalOpen = true;
+      data.statisticsButtonClicked = true;
+    }
+  }
+);
 </script>
 
 <style lang="scss">

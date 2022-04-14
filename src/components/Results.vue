@@ -58,6 +58,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  statisticsButtonClicked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const distributionClass = (index) => {
@@ -65,6 +69,8 @@ const distributionClass = (index) => {
 
   if (isNaN(Number(index.replace("guess", "")))) {
     className = "fails";
+  } else if (props.statisticsButtonClicked) {
+    className = null;
   } else {
     className =
       props.attempt === Number(index.replace("guess", "")) ? "current" : null;
