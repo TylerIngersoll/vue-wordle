@@ -37,7 +37,7 @@
       </span>
     </div>
 
-    <!-- <button type="button" @click="onShare">Share</button> -->
+    <button type="button" @click="onShare">Share</button>
     <button type="button" @click="onClearStats">Clear stats</button>
   </aside>
 </template>
@@ -61,6 +61,9 @@ const props = defineProps({
   statisticsButtonClicked: {
     type: Boolean,
     default: false,
+  },
+  shareableTiles: {
+    type: String,
   },
 });
 
@@ -86,9 +89,9 @@ const getWidth = (guess) => {
   return (guess / wordle.largestDist) * 100;
 };
 
-// const onShare = () => {
-//   /** do to */
-// };
+const onShare = () => {
+  console.log(props.shareableTiles);
+};
 
 const onClearStats = () => {
   window.localStorage.clear();

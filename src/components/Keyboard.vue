@@ -10,6 +10,8 @@
           }
         "
         :class="['key', key.toLowerCase()]"
+        :title="key"
+        :aria-label="`Click the ${key} key`"
         @click="() => onKeyPress(key)"
         @touch="() => onKeyPress(key)"
         @mousedown="() => onPressed(key)"
@@ -128,7 +130,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .keyboard {
-  margin: auto auto 1rem;
+  margin: auto auto 1.5rem;
   padding: 0 0.25rem;
   max-width: 28rem;
   width: 100%;
@@ -166,28 +168,22 @@ onBeforeUnmount(() => {
     color 0.4s 1.6s ease-in-out;
   cursor: pointer;
 
-  &.a {
-    margin-left: 6%;
-  }
-
-  &.l {
-    margin-right: 6%;
-  }
-
+  &.a,
   &.z {
-    margin-left: 14%;
+    margin-left: 20%;
   }
 
+  &.l,
   &.m {
-    margin-right: 14%;
+    margin-right: 20%;
   }
 
   &.enter {
-    margin-left: 2px;
+    margin-left: 10%;
   }
 
   &.backspace {
-    margin-right: 2px;
+    margin-right: 10%;
   }
 
   @media screen and (max-width: 359px) {
