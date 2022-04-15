@@ -161,11 +161,15 @@ body.modal-open {
     position: relative;
     max-width: calc(100% - 2rem);
     width: 100%;
-    margin: auto 2rem;
+    margin: auto 1rem;
     padding: 1rem;
     background-color: $gray8;
     border-radius: 0.6rem;
     border: 0.15rem solid black;
+
+    @media screen and (min-width: 376px) {
+      margin: auto 2rem;
+    }
 
     @media screen and (min-width: $md) {
       max-width: calc(100% - 4rem);
