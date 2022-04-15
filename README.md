@@ -23,7 +23,7 @@ To set up your project, do the following:
 - Clone this repo:
 
   ```bash
-  git clone https://github.com/TylerIngersoll/vue-wordle.git VueWordle.game/
+  git clone https://github.com/tyleringersoll/vue-wordle.git VueWordle.game/
   ```
 
 - Navigate to `WordleClone.game/` and run `npm install`
