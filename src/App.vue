@@ -1,6 +1,6 @@
 <template>
   <header class="container">
-    <h1 class="first-heading center">Wordle Clone</h1>
+    <h1 class="first-heading center">Tyler's Vue Wordle</h1>
     <button
       class="statistics"
       type="button"
@@ -11,12 +11,12 @@
     />
   </header>
   <main>
-    <WordleClone :statistics="data.openStatistics" />
+    <VueWordle :statistics="data.openStatistics" />
   </main>
 </template>
 
 <script setup>
-import { default as WordleClone } from "@/views/WordleClone.vue";
+import { default as VueWordle } from "@/views/VueWordle.vue";
 import { nextTick, reactive } from "vue";
 
 const data = reactive({
@@ -75,7 +75,7 @@ h5 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: $gray0;
 }
 
