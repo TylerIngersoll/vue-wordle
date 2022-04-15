@@ -57,15 +57,22 @@
             </p>
             <ul class="no-list">
               <li>
-                <span class="tile">🟩</span> This letter is in the correct
-                position in the word.
+                <span class="color-tile">🟩</span>
+                <span class="color-tile-info"
+                  >This letter is in the correct position in the word.</span
+                >
               </li>
               <li>
-                <span class="tile">🟨</span> This letter is in the word, but in
-                the wrong position.
+                <span class="color-tile">🟨</span>
+                <span class="color-tile-info"
+                  >This letter is in the word, but in the wrong position.</span
+                >
               </li>
               <li>
-                <span class="tile">⬛</span> This letter is not in the word.
+                <span class="color-tile">⬛</span>
+                <span class="color-tile-info"
+                  >This letter is not in the word.</span
+                >
               </li>
             </ul>
           </template>
@@ -459,6 +466,7 @@ watch(
 
   &.description {
     margin-bottom: 0;
+    padding-right: 2.15rem;
   }
 
   &-description {
@@ -633,17 +641,34 @@ watch(
 </style>
 
 <style lang="scss">
-ul.no-list {
-  list-style: none;
-  padding-left: 0;
+.wordle {
+  ul.no-list {
+    list-style: none;
+    padding-left: 0;
 
-  li {
+    li {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin-bottom: 1rem;
+
+      .color {
+        &-tile {
+          height: 42px;
+          font-size: 1.2rem;
+          margin-right: 1rem;
+
+          &-info {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  h2.secondary-heading {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
-}
-
-h2.secondary-heading {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
 }
 </style>
