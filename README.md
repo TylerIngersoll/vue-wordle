@@ -2,6 +2,8 @@
 
 After playing the real Wordle for a few days I thought it would be a fun challenge to create my own version using Vue.js 3 and then play as many times as I want.
 
+See it live here: [https://vue-wordle-tyleringersoll.netlify.app/](https://vue-wordle-tyleringersoll.netlify.app/)
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/90900e60-a588-4166-b07a-0a3362199b5e/deploy-status)](https://app.netlify.com/sites/wordle-tyleringersoll/deploys)
 
 ## Prerequisites
