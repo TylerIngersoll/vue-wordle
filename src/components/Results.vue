@@ -40,25 +40,27 @@
         </div>
       </div>
 
-      <button
+      <!-- <button
         class="share-button"
         type="button"
         title="Share your attempt"
         aria-label="Click this button to share your attempt!"
         @click="onShare"
         v-html="shareIcon"
-      />
+      /> -->
     </div>
     <br /><br />
-    <button type="button" @click="onClearStats">Clear stats</button>
+    <button type="button" @click="onClearStats">
+      Clear stats (debug tool)
+    </button>
   </div>
 </template>
 
 <script setup>
 import { defineProps, reactive, onMounted } from "vue";
 
-const shareIcon =
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M30.3 13.7L25 8.4l-5.3 5.3-1.4-1.4L25 5.6l6.7 6.7z"/><path d="M24 7h2v21h-2z"/><path d="M35 40H15c-1.7 0-3-1.3-3-3V19c0-1.7 1.3-3 3-3h7v2h-7c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V19c0-.6-.4-1-1-1h-7v-2h7c1.7 0 3 1.3 3 3v18c0 1.7-1.3 3-3 3z"/></svg>';
+// const shareIcon =
+//   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M30.3 13.7L25 8.4l-5.3 5.3-1.4-1.4L25 5.6l6.7 6.7z"/><path d="M24 7h2v21h-2z"/><path d="M35 40H15c-1.7 0-3-1.3-3-3V19c0-1.7 1.3-3 3-3h7v2h-7c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V19c0-.6-.4-1-1-1h-7v-2h7c1.7 0 3 1.3 3 3v18c0 1.7-1.3 3-3 3z"/></svg>';
 
 const props = defineProps({
   stats: {
@@ -104,31 +106,17 @@ const getWidth = (guess) => {
   return (guess / wordle.largestDist) * 100;
 };
 
-const browserCanShare = () => {
-  return (
-    navigator.canShare &&
-    navigator.canShare(props.shareableTiles) &&
-    navigator.share
-  );
-};
+// const onShare = () => {
+//   const shareText = props.shareableTiles;
 
-const onShare = () => {
-  let shareSuccess = false;
+//   alert(navigator.canShare());
 
-  try {
-    if (browserCanShare()) {
-      navigator.share(props.shareableTiles);
-      shareSuccess = true;
-    }
-  } catch (error) {
-    shareSuccess = false;
-  }
-
-  if (!shareSuccess) {
-    navigator.clipboard.writeText(props.shareableTiles);
-    // alert("Game results copied to clipboard!");
-  }
-};
+//   !(navigator.userAgent.toLowerCase().indexOf("firefox") > -1) &&
+//   navigator.canShare &&
+//   navigator.canShare(shareText)
+//     ? navigator.share(shareText)
+//     : navigator.clipboard.writeText(props.shareableTiles);
+// };
 
 const onClearStats = () => {
   window.localStorage.clear();

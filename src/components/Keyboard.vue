@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   align-items: center;
   padding: 1rem 0.725rem;
-  min-width: 2rem;
+  min-width: 2.2rem;
   font-family: inherit;
   font-size: 0.8rem;
   line-height: 0;
@@ -168,22 +168,24 @@ onBeforeUnmount(() => {
     color 0.4s 1.6s ease-in-out;
   cursor: pointer;
 
+  &.q,
   &.a,
   &.z {
     margin-left: 20%;
   }
 
+  &.p,
   &.l,
   &.m {
     margin-right: 20%;
   }
 
   &.enter {
-    margin-left: 10%;
+    margin-left: 6%;
   }
 
   &.backspace {
-    margin-right: 10%;
+    margin-right: 6%;
   }
 
   @media screen and (max-width: 359px) {

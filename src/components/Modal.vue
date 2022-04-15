@@ -195,6 +195,7 @@ button.close-button {
   border: 0;
   outline: 0;
   background: transparent;
+  z-index: 2;
 
   &:hover {
     cursor: pointer;

@@ -125,6 +125,7 @@ const onReset = () => {
   data.keyClasses = [];
   data.stats = {};
   data.statisticsButtonClicked = false;
+  data.shareableTiles = "";
 
   getWord();
   getStats();
