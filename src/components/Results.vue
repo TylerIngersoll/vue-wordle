@@ -49,10 +49,10 @@
         v-html="shareIcon"
       /> -->
     </div>
-    <br /><br />
+    <!-- <br /><br />
     <button type="button" @click="onClearStats">
       Clear stats (debug tool)
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -118,9 +118,9 @@ const getWidth = (guess) => {
 //     : navigator.clipboard.writeText(props.shareableTiles);
 // };
 
-const onClearStats = () => {
-  window.localStorage.clear();
-};
+// const onClearStats = () => {
+//   window.localStorage.clear();
+// };
 
 onMounted(() => {
   const obj = props.stats.guessDistribution;
@@ -163,15 +163,23 @@ h2 {
 .stat {
   display: block;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   line-height: 1;
+
+  @media screen and (min-width: 376px) {
+    font-size: 1.5rem;
+  }
 }
 
 .label {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   line-height: 1;
+
+  @media screen and (min-width: 376px) {
+    font-size: 0.8rem;
+  }
 }
 
 .guess {

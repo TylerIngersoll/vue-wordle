@@ -188,7 +188,7 @@ onBeforeUnmount(() => {
     margin-right: 6%;
   }
 
-  @media screen and (max-width: 359px) {
+  @media screen and (max-width: 375px) {
     font-size: 0.6rem;
     padding: 1rem 0.25rem;
     min-width: 1.55rem;

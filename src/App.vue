@@ -1,6 +1,6 @@
 <template>
   <header class="container">
-    <h1 class="first-heading center">Tyler's Vue Wordle</h1>
+    <h1 class="first-heading center">Tyler's Vue.js Wordle</h1>
     <button
       class="statistics"
       type="button"
@@ -75,8 +75,12 @@ h5 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1rem;
   color: $gray0;
+
+  @media screen and (min-width: 376px) {
+    font-size: 1.4rem;
+  }
 }
 
 h2 {
