@@ -31,16 +31,46 @@
           maxWidth="34rem"
           @modal-close="onModalClose"
         >
-          <h2 class="modal-heading" v-if="data.success">You win! 🎉</h2>
-          <template v-else-if="data.statisticsButtonClicked"></template>
-          <template v-else>
+          <template v-if="data.success">
+            <h2 class="modal-heading">You win! 🎉</h2>
+          </template>
+          <template v-else-if="data.fail">
             <h2 class="modal-heading description">You lose! 🤡</h2>
             <p class="modal-heading-description">
               The word was: <span class="highlight">{{ data.baseWord }}</span>
             </p>
           </template>
+          <template v-else-if="data.infoButtonClicked">
+            <h2 class="modal-heading description">
+              About Tyler's Vue.js Wordle
+            </h2>
+            <p>
+              This is a game with the same rules as the original Wordle except
+              everybody gets a different word on each play, and you can play as
+              many times as you would like each day.
+            </p>
+            <h2 class="secondary-heading">Objective</h2>
+            <p>Solve the five-letter word within six attempts.</p>
+            <h2 class="secondary-heading">Color key</h2>
+            <p>
+              You will receive the following feedback after submitting a word:
+            </p>
+            <ul class="no-list">
+              <li>
+                <span class="tile">🟩</span> This letter is in the correct
+                position in the word.
+              </li>
+              <li>
+                <span class="tile">🟨</span> This letter is in the word, but in
+                the wrong position.
+              </li>
+              <li>
+                <span class="tile">⬛</span> This letter is not in the word.
+              </li>
+            </ul>
+          </template>
           <Results
-            v-if="data.modalOpen"
+            v-if="data.statisticsButtonClicked || data.success || data.fail"
             :stats="data.stats"
             :attempt="data.row"
             :success="data.success"
@@ -61,6 +91,10 @@ const rowRefs = ref([]);
 const tileRefs = ref([]);
 
 const props = defineProps({
+  info: {
+    type: Boolean,
+    default: false,
+  },
   statistics: {
     type: Boolean,
     default: false,
@@ -84,6 +118,7 @@ const data = reactive({
   success: false,
   fail: false,
   stats: {},
+  infoButtonClicked: false,
   statisticsButtonClicked: false,
 });
 
@@ -306,6 +341,7 @@ const onFail = () => {
 
 const onModalClose = () => {
   data.modalOpen = false;
+  data.infoButtonClicked = false;
   data.statisticsButtonClicked = false;
 
   if (data.success || data.fail) {
@@ -377,9 +413,19 @@ onMounted(() => {
 watch(
   () => props.statistics,
   () => {
-    if (data.modalOpen === false) {
+    if (props.statistics === true && data.modalOpen === false) {
       data.modalOpen = true;
       data.statisticsButtonClicked = true;
+    }
+  }
+);
+
+watch(
+  () => props.info,
+  () => {
+    if (props.info === true && data.modalOpen === false) {
+      data.modalOpen = true;
+      data.infoButtonClicked = true;
     }
   }
 );
@@ -583,5 +629,21 @@ watch(
   100% {
     transform: translateX(0);
   }
+}
+</style>
+
+<style lang="scss">
+ul.no-list {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    margin-bottom: 1rem;
+  }
+}
+
+h2.secondary-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 </style>
