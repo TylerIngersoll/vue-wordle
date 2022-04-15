@@ -87,7 +87,7 @@ const props = defineProps({
 const distributionClass = (index) => {
   let className = null;
 
-  if (isNaN(Number(index.replace("guess", "")))) {
+  if (isNaN(Number(index.replace("guess", ""))) && !props.success) {
     className = "fails";
   } else if (props.statisticsButtonClicked) {
     className = null;
@@ -216,13 +216,13 @@ h2 {
   padding: 0.5rem 0;
 }
 
-.guess-share-container {
+/* .guess-share-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
+} */
 
-.guess-distribution {
+/* .guess-distribution {
   flex: 2;
   padding-right: 1rem;
   border-right: 1px solid white;
@@ -230,9 +230,9 @@ h2 {
   @media screen and (min-width: $md) {
     flex: 3;
   }
-}
+} */
 
-button.share-button {
+/* button.share-button {
   display: flex;
   justify-content: flex-end;
   flex: 1;
@@ -255,11 +255,11 @@ button.share-button {
     outline-style: solid;
     border-radius: 50%;
   }
-}
+} */
 </style>
 
 <style lang="scss">
-.share-button {
+/* .share-button {
   svg {
     width: 4rem;
     height: 4rem;
@@ -271,5 +271,5 @@ button.share-button {
       fill: $highlight1;
     }
   }
-}
+} */
 </style>
