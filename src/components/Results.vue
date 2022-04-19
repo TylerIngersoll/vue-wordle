@@ -40,14 +40,16 @@
         </div>
       </div>
 
-      <!-- <button
+      <button
+        v-if="!props.statisticsButtonClicked"
         class="share-button"
         type="button"
-        title="Share your attempt"
-        aria-label="Click this button to share your attempt!"
+        title="Copy to clipboard"
+        aria-label="Click this button to copy your attempt results to the clipboard!"
         @click="onShare"
-        v-html="shareIcon"
-      /> -->
+      >
+        Copy to clipboard
+      </button>
     </div>
     <!-- <br /><br />
     <button type="button" @click="onClearStats">
@@ -75,6 +77,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  fail: {
+    type: Boolean,
+    default: false,
+  },
   statisticsButtonClicked: {
     type: Boolean,
     default: false,
@@ -87,7 +93,7 @@ const props = defineProps({
 const distributionClass = (index) => {
   let className = null;
 
-  if (isNaN(Number(index.replace("guess", ""))) && !props.success) {
+  if (isNaN(Number(index.replace("guess", ""))) && props.fail) {
     className = "fails";
   } else if (props.statisticsButtonClicked) {
     className = null;
@@ -106,17 +112,9 @@ const getWidth = (guess) => {
   return (guess / wordle.largestDist) * 100;
 };
 
-// const onShare = () => {
-//   const shareText = props.shareableTiles;
-
-//   alert(navigator.canShare());
-
-//   !(navigator.userAgent.toLowerCase().indexOf("firefox") > -1) &&
-//   navigator.canShare &&
-//   navigator.canShare(shareText)
-//     ? navigator.share(shareText)
-//     : navigator.clipboard.writeText(props.shareableTiles);
-// };
+const onShare = () => {
+  navigator.clipboard.writeText(props.shareableTiles);
+};
 
 // const onClearStats = () => {
 //   window.localStorage.clear();
@@ -240,20 +238,23 @@ h2 {
   }
 } */
 
-/* button.share-button {
+button.share-button {
   display: flex;
   justify-content: flex-end;
   flex: 1;
+  margin-top: 2rem;
   height: 100%;
-  padding: 0;
-  width: 4rem;
-  height: 4rem;
-  border: 0;
+  padding: 1rem;
+
+  color: white;
+  border: 2px solid $highlight3;
+  border-radius: 1rem;
   outline: 0;
   background: transparent;
 
   &:hover {
     cursor: pointer;
+    color: gray;
   }
 
   &:focus-visible {
@@ -261,9 +262,8 @@ h2 {
     outline-color: $highlight5;
     outline-width: 0.2rem;
     outline-style: solid;
-    border-radius: 50%;
   }
-} */
+}
 </style>
 
 <style lang="scss">
