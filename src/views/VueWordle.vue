@@ -75,12 +75,20 @@
                 >
               </li>
             </ul>
+            <p>
+              <a
+                href="https://github.com/tyleringersoll/vue-wordle"
+                target="_blank"
+                >Github</a
+              >
+            </p>
           </template>
           <Results
             v-if="data.statisticsButtonClicked || data.success || data.fail"
             :stats="data.stats"
             :attempt="data.row"
             :success="data.success"
+            :fail="data.fail"
             :statisticsButtonClicked="data.statisticsButtonClicked"
             :shareableTiles="data.shareableTiles"
           /> </Modal
@@ -275,28 +283,29 @@ const setClasses = () => {
   }
 };
 
-const buildShareableTileString = () => {
-  let tileString = "Tyler's Wordle Game\n";
+const buildShareString = () => {
+  let shareString =
+    "Tyler's Wordle Game\nhttps://vue-wordle-tyleringersoll.netlify.app/\n";
+
+  shareString += `The word was: ${data.baseWord}\n\n`;
 
   data.keyClasses.forEach((word, index) => {
     const className = word.class;
 
     if (className === "match") {
-      tileString += "🟩";
+      shareString += "🟩";
     } else if (className === "miss") {
-      tileString += "⬛";
+      shareString += "⬛";
     } else if (className === "present") {
-      tileString += "🟨";
+      shareString += "🟨";
     }
 
     if ((index + 1) % 5 === 0) {
-      tileString += "\n";
+      shareString += "\n";
     }
   });
 
-  tileString += "\nhttps://wordle-tyleringersoll.netlify.app/";
-
-  data.shareableTiles = tileString;
+  data.shareableTiles = shareString;
 };
 
 const onSubmit = () => {
@@ -325,7 +334,7 @@ const onSubmit = () => {
 const onSuccess = () => {
   data.success = true;
   rowRefs.value[`row${data.row}`].classList.add("success");
-  buildShareableTileString();
+  buildShareString();
   setStats();
 
   setTimeout(() => {
@@ -337,7 +346,7 @@ const onSuccess = () => {
 const onFail = () => {
   data.fail = true;
   rowRefs.value[`row${data.row}`].classList.add("failure");
-  buildShareableTileString();
+  buildShareString();
   setStats();
 
   setTimeout(() => {
